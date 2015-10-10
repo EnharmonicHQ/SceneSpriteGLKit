@@ -32,6 +32,8 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
 @property(nonatomic, readonly)SCNNode *monkey;
 @property(nonatomic, readonly)SCNNode *camera;
 
+@property(nonatomic, strong)CMMotionManager *motionManager;
+
 @end
 
 
@@ -68,24 +70,44 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     [gestureRecognizers addObject:pinchGesture];
     [gestureRecognizers addObjectsFromArray:scnView.gestureRecognizers];
     scnView.gestureRecognizers = [NSArray arrayWithArray:gestureRecognizers];
+    
+    CMMotionManager *motionManager = [[CMMotionManager alloc] init];
+    [self setMotionManager:motionManager];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if ([self.motionManager isDeviceMotionAvailable])
+    {
+        [self.motionManager startDeviceMotionUpdates];
+        [self.scnView setPlaying:YES];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.motionManager isDeviceMotionActive])
+    {
+        [self.motionManager stopDeviceMotionUpdates];
+    }
 }
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
-- (BOOL)prefersStatusBarHidden {
+- (BOOL)prefersStatusBarHidden
+{
     return YES;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 +(SCNScene *)loadSceneKitScene
@@ -107,7 +129,6 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     monkeyMaterial.locksAmbientWithDiffuse = YES;
     
     monkeyNode.geometry.firstMaterial = monkeyMaterial;
-    
     
     SCNCamera *camera = [SCNCamera camera];
     SCNNode *cameraNode = [SCNNode node];
@@ -136,6 +157,41 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     ambientLightNode.light.color = [UIColor colorWithWhite:0.8 alpha:1.0];
     [scene.rootNode addChildNode:ambientLightNode];
     return scene;
+}
+
+#pragma mark - SCNSceneRendererDelegate
+
+static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotationMatrix, SCNMatrix4 *transform_p)
+{
+    transform_p->m11 = deviceRotationMatrix.m11;
+    transform_p->m21 = deviceRotationMatrix.m12;
+    transform_p->m31 = deviceRotationMatrix.m13;
+    transform_p->m12 = deviceRotationMatrix.m21;
+    transform_p->m22 = deviceRotationMatrix.m22;
+    transform_p->m32 = deviceRotationMatrix.m23;
+    transform_p->m13 = deviceRotationMatrix.m31;
+    transform_p->m23 = deviceRotationMatrix.m32;
+    transform_p->m33 = deviceRotationMatrix.m33;
+}
+
+- (void)renderer:(id <SCNSceneRenderer>)aRenderer updateAtTime:(NSTimeInterval)time
+{
+    if ([self.motionManager isDeviceMotionActive])
+    {
+        CMDeviceMotion *deviceMotion = [self.motionManager deviceMotion];
+        CMAttitude *deviceAttitude = deviceMotion.attitude;
+        CMRotationMatrix deviceRotationMatrix = deviceAttitude.rotationMatrix;
+        SCNNode *monkey = [self monkey];
+        SCNVector3 monkeyScale = [monkey scale];
+        
+        SCNMatrix4 transform = [monkey transform];
+        
+        applyRotationMatrixToTransform(deviceRotationMatrix, &transform);
+        
+        [monkey setTransform:transform];
+        [monkey setScale:monkeyScale];
+        [monkey setPosition:(SCNVector3){0.0, 0.0, 0.0}];
+    }
 }
 
 #pragma mark - gesture recognition
