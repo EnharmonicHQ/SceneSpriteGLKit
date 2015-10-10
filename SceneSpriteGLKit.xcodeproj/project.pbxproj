@@ -9,11 +9,19 @@
 /* Begin PBXBuildFile section */
 		AB3ED1281BC8C8DD001D8CF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED1271BC8C8DD001D8CF3 /* main.m */; };
 		AB3ED12B1BC8C8DD001D8CF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED12A1BC8C8DD001D8CF3 /* AppDelegate.m */; };
-		AB3ED12D1BC8C8DD001D8CF3 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED12C1BC8C8DD001D8CF3 /* art.scnassets */; };
 		AB3ED1301BC8C8DD001D8CF3 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED12F1BC8C8DD001D8CF3 /* GameViewController.m */; };
-		AB3ED1331BC8C8DD001D8CF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1311BC8C8DD001D8CF3 /* Main.storyboard */; };
 		AB3ED1351BC8C8DD001D8CF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1341BC8C8DD001D8CF3 /* Assets.xcassets */; };
 		AB3ED1381BC8C8DD001D8CF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1361BC8C8DD001D8CF3 /* LaunchScreen.storyboard */; };
+		AB3ED1401BC8C9D3001D8CF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED13F1BC8C9D3001D8CF3 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		AB3ED1481BC8C9F5001D8CF3 /* back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1411BC8C9F5001D8CF3 /* back.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED1491BC8C9F5001D8CF3 /* bottom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1421BC8C9F5001D8CF3 /* bottom.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED14A1BC8C9F5001D8CF3 /* front.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1431BC8C9F5001D8CF3 /* front.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED14B1BC8C9F5001D8CF3 /* left.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1441BC8C9F5001D8CF3 /* left.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED14C1BC8C9F5001D8CF3 /* right.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1451BC8C9F5001D8CF3 /* right.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED14D1BC8C9F5001D8CF3 /* top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1461BC8C9F5001D8CF3 /* top.jpg */; settings = {ASSET_TAGS = (); }; };
+		AB3ED14E1BC8C9F5001D8CF3 /* monkey.dae in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1471BC8C9F5001D8CF3 /* monkey.dae */; settings = {ASSET_TAGS = (); }; };
+		AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */; settings = {ASSET_TAGS = (); }; };
+		ABDA545F1BC9D63C001D0DC0 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA545E1BC9D63C001D0DC0 /* skybox.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,13 +29,23 @@
 		AB3ED1271BC8C8DD001D8CF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB3ED1291BC8C8DD001D8CF3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AB3ED12A1BC8C8DD001D8CF3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AB3ED12C1BC8C8DD001D8CF3 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		AB3ED12E1BC8C8DD001D8CF3 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		AB3ED12F1BC8C8DD001D8CF3 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		AB3ED1321BC8C8DD001D8CF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB3ED1341BC8C8DD001D8CF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB3ED1371BC8C8DD001D8CF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB3ED1391BC8C8DD001D8CF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB3ED13F1BC8C9D3001D8CF3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		AB3ED1411BC8C9F5001D8CF3 /* back.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = back.jpg; sourceTree = "<group>"; };
+		AB3ED1421BC8C9F5001D8CF3 /* bottom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bottom.jpg; sourceTree = "<group>"; };
+		AB3ED1431BC8C9F5001D8CF3 /* front.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = front.jpg; sourceTree = "<group>"; };
+		AB3ED1441BC8C9F5001D8CF3 /* left.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = left.jpg; sourceTree = "<group>"; };
+		AB3ED1451BC8C9F5001D8CF3 /* right.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = right.jpg; sourceTree = "<group>"; };
+		AB3ED1461BC8C9F5001D8CF3 /* top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = top.jpg; sourceTree = "<group>"; };
+		AB3ED1471BC8C9F5001D8CF3 /* monkey.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = monkey.dae; sourceTree = "<group>"; };
+		AB3ED14F1BC8CCE8001D8CF3 /* normalizeRotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = normalizeRotation.h; sourceTree = "<group>"; };
+		AB3ED1501BC8CD16001D8CF3 /* SKScene+Unarchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKScene+Unarchive.h"; sourceTree = "<group>"; };
+		AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+Unarchive.m"; sourceTree = "<group>"; };
+		ABDA545E1BC9D63C001D0DC0 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +80,21 @@
 			children = (
 				AB3ED1291BC8C8DD001D8CF3 /* AppDelegate.h */,
 				AB3ED12A1BC8C8DD001D8CF3 /* AppDelegate.m */,
-				AB3ED12C1BC8C8DD001D8CF3 /* art.scnassets */,
+				AB3ED14F1BC8CCE8001D8CF3 /* normalizeRotation.h */,
+				AB3ED1501BC8CD16001D8CF3 /* SKScene+Unarchive.h */,
+				AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */,
 				AB3ED12E1BC8C8DD001D8CF3 /* GameViewController.h */,
 				AB3ED12F1BC8C8DD001D8CF3 /* GameViewController.m */,
-				AB3ED1311BC8C8DD001D8CF3 /* Main.storyboard */,
 				AB3ED1341BC8C8DD001D8CF3 /* Assets.xcassets */,
+				AB3ED1411BC8C9F5001D8CF3 /* back.jpg */,
+				AB3ED1421BC8C9F5001D8CF3 /* bottom.jpg */,
+				AB3ED1431BC8C9F5001D8CF3 /* front.jpg */,
+				AB3ED1441BC8C9F5001D8CF3 /* left.jpg */,
+				AB3ED1451BC8C9F5001D8CF3 /* right.jpg */,
+				AB3ED1461BC8C9F5001D8CF3 /* top.jpg */,
+				ABDA545E1BC9D63C001D0DC0 /* skybox.png */,
+				AB3ED1471BC8C9F5001D8CF3 /* monkey.dae */,
+				AB3ED13F1BC8C9D3001D8CF3 /* Main.storyboard */,
 				AB3ED1361BC8C8DD001D8CF3 /* LaunchScreen.storyboard */,
 				AB3ED1391BC8C8DD001D8CF3 /* Info.plist */,
 				AB3ED1261BC8C8DD001D8CF3 /* Supporting Files */,
@@ -108,6 +136,7 @@
 		AB3ED11B1BC8C8DD001D8CF3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Enharmonic inc";
 				TargetAttributes = {
@@ -139,10 +168,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB3ED12D1BC8C8DD001D8CF3 /* art.scnassets in Resources */,
+				AB3ED1491BC8C9F5001D8CF3 /* bottom.jpg in Resources */,
+				ABDA545F1BC9D63C001D0DC0 /* skybox.png in Resources */,
+				AB3ED14B1BC8C9F5001D8CF3 /* left.jpg in Resources */,
+				AB3ED14D1BC8C9F5001D8CF3 /* top.jpg in Resources */,
+				AB3ED14E1BC8C9F5001D8CF3 /* monkey.dae in Resources */,
+				AB3ED14C1BC8C9F5001D8CF3 /* right.jpg in Resources */,
+				AB3ED14A1BC8C9F5001D8CF3 /* front.jpg in Resources */,
+				AB3ED1481BC8C9F5001D8CF3 /* back.jpg in Resources */,
 				AB3ED1381BC8C8DD001D8CF3 /* LaunchScreen.storyboard in Resources */,
 				AB3ED1351BC8C8DD001D8CF3 /* Assets.xcassets in Resources */,
-				AB3ED1331BC8C8DD001D8CF3 /* Main.storyboard in Resources */,
+				AB3ED1401BC8C9D3001D8CF3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +191,7 @@
 			files = (
 				AB3ED12B1BC8C8DD001D8CF3 /* AppDelegate.m in Sources */,
 				AB3ED1301BC8C8DD001D8CF3 /* GameViewController.m in Sources */,
+				AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */,
 				AB3ED1281BC8C8DD001D8CF3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,14 +199,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AB3ED1311BC8C8DD001D8CF3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AB3ED1321BC8C8DD001D8CF3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AB3ED1361BC8C8DD001D8CF3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -304,6 +333,7 @@
 				AB3ED13E1BC8C8DD001D8CF3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
