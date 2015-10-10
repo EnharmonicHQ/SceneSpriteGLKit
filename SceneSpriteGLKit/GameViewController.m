@@ -239,6 +239,15 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
         SCNMatrix4 camProjectionmatrix = [camera projectionTransform];
         GLKMatrix4 projectionMatrix = SCNMatrix4ToGLKMatrix4(camProjectionmatrix);
         self.skybox.transform.projectionMatrix = projectionMatrix;
+        
+        GLKMatrix4 baseModelViewMatrix = GLKMatrix4Identity;
+        GLKMatrix4 modelViewMatrix = GLKMatrix4Make(deviceRotationMatrix.m11, deviceRotationMatrix.m21, deviceRotationMatrix.m31, 0.0f,
+                                                    deviceRotationMatrix.m12, deviceRotationMatrix.m22, deviceRotationMatrix.m32, 0.0f,
+                                                    deviceRotationMatrix.m13, deviceRotationMatrix.m23, deviceRotationMatrix.m33, 0.0f,
+                                                    0.0f, 0.0, 0.0, 1.0);
+        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, M_PI_2, 1.0, 0.0, 0.0);
+        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
+        self.skybox.transform.modelviewMatrix = modelViewMatrix;
     }
 }
 
