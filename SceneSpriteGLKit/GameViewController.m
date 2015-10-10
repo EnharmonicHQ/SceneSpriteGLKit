@@ -119,18 +119,40 @@ static const GLfloat skyboxSize = 64.0f;
 
 #pragma mark - loading
 
++(NSArray *)cubeMapImages
+{
+    static NSArray *mapArray;
+    if (mapArray == nil)
+    {
+        mapArray = @[
+                     [UIImage imageNamed:@"right.jpg"],
+                     [UIImage imageNamed:@"left.jpg"],
+                     [UIImage imageNamed:@"top.jpg"],
+                     [UIImage imageNamed:@"bottom.jpg"],
+                     [UIImage imageNamed:@"back.jpg"],
+                     [UIImage imageNamed:@"front.jpg"],
+                     ];
+    }
+    return mapArray;
+}
+
 +(NSArray *)cubeMapFiles
 {
-    NSBundle *bundle = [NSBundle mainBundle];
-    [bundle pathForResource:@"right" ofType:@"jpg"];
-    NSArray *mapArray = @[
-                          [bundle pathForResource:@"right" ofType:@"jpg"],
-                          [bundle pathForResource:@"left" ofType:@"jpg"],
-                          [bundle pathForResource:@"top" ofType:@"jpg"],
-                          [bundle pathForResource:@"bottom" ofType:@"jpg"],
-                          [bundle pathForResource:@"back" ofType:@"jpg"],
-                          [bundle pathForResource:@"front" ofType:@"jpg"],
-                          ];
+    static NSArray *mapArray;
+    if (mapArray == nil)
+    {
+        
+        NSBundle *bundle = [NSBundle mainBundle];
+        [bundle pathForResource:@"right" ofType:@"jpg"];
+        mapArray = @[
+                     [bundle pathForResource:@"right" ofType:@"jpg"],
+                     [bundle pathForResource:@"left" ofType:@"jpg"],
+                     [bundle pathForResource:@"top" ofType:@"jpg"],
+                     [bundle pathForResource:@"bottom" ofType:@"jpg"],
+                     [bundle pathForResource:@"back" ofType:@"jpg"],
+                     [bundle pathForResource:@"front" ofType:@"jpg"],
+                     ];
+    }
     return mapArray;
 }
 
@@ -164,6 +186,10 @@ static const GLfloat skyboxSize = 64.0f;
     SCNMaterial *monkeyMaterial = [SCNMaterial material];
     monkeyMaterial.diffuse.contents = [UIColor purpleColor];
     monkeyMaterial.specular.contents = [UIColor whiteColor];
+    
+    //Reflect the skybox on the monkey model
+    monkeyMaterial.reflective.contents = [self cubeMapImages];
+
     monkeyMaterial.shininess = 100.0;
     monkeyMaterial.locksAmbientWithDiffuse = YES;
     
