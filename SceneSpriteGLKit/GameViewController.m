@@ -10,12 +10,14 @@
 #import "SKScene+Unarchive.h"
 #import "normalizeRotation.h"
 #import "ENHVideoCamToSKTexture.h"
+#import "ENHMetalSkybox.h"
 
 @import SceneKit;
 @import GLKit;
 @import SpriteKit;
 @import CoreMotion;
 @import OpenGLES;
+@import Metal;
 
 static NSString *kMonkeyObjectName = @"Suzanne";
 static NSString *kObjectFileName = @"monkey";
@@ -39,6 +41,7 @@ static const GLfloat skyboxSize = 64.0f;
 
 @property(nonatomic, strong)CMMotionManager *motionManager;
 @property(nonatomic, strong)GLKSkyboxEffect *skybox;
+@property(nonatomic, strong)ENHMetalSkybox *metalSkybox;
 
 @property(nonatomic, weak)SKScene *loadedFromDiskSKScene;
 @property(nonatomic, strong)ENHVideoCamToSKTexture *videoTextureBridge;
@@ -51,7 +54,9 @@ static const GLfloat skyboxSize = 64.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSDictionary *options = @{SCNPreferredRenderingAPIKey:@(SCNRenderingAPIOpenGLES2)};
+
+    //Let Scene Kit choose Metal or OpenGL ES 2, depending on device capabilities.
+    NSDictionary *options = nil;
     SCNView *scnView = [[SCNView alloc] initWithFrame:self.view.bounds options:options];
     [self.view addSubview:scnView];
     
@@ -83,9 +88,18 @@ static const GLfloat skyboxSize = 64.0f;
     CMMotionManager *motionManager = [[CMMotionManager alloc] init];
     [self setMotionManager:motionManager];
     
-    //Background (GLKit) skybox
-    GLKSkyboxEffect *skybox = [self.class loadSkybox];
-    [self setSkybox:skybox];
+    if (scnView.renderingAPI == SCNRenderingAPIOpenGLES2)
+    {
+        //Background (GLKit) skybox
+        GLKSkyboxEffect *skybox = [self.class loadSkybox];
+        [self setSkybox:skybox];
+    }
+    else
+    {
+        //Background (Metal) skybox
+        ENHMetalSkybox *skybox = [self.class loadMetalSkybox:scnView];
+        [self setMetalSkybox:skybox];
+    }
     
     //Place the Sprite Kit scene on a cube and attach it to the monkey node
     SKScene *loadedFromDiskSKScene = [self.class loadSpriteKitScene];
@@ -198,6 +212,16 @@ static const GLfloat skyboxSize = 64.0f;
     return mapArray;
 }
 
++(ENHMetalSkybox *)loadMetalSkybox:(SCNView *)sceneView
+{
+    ENHMetalSkybox *skybox = [[ENHMetalSkybox alloc] initWithRenderer:sceneView];
+    [skybox loadSkyboxWithResourceName:@"skybox" resourceExtension:@"png"];
+    skybox.xSize = skyboxSize;
+    skybox.ySize = skyboxSize;
+    skybox.zSize = skyboxSize;
+    return skybox;
+}
+
 +(GLKSkyboxEffect *)loadSkybox
 {
     NSArray *cubeMapFiles = [self.class cubeMapFiles];
@@ -247,7 +271,6 @@ static const GLfloat skyboxSize = 64.0f;
     SCNCamera *camera = [SCNCamera camera];
     double zFar = hypot(skyboxSize*2, skyboxSize*2) + [camera zNear]; // make sure the skybox fits
     [camera setZFar:zFar];
-
     SCNNode *cameraNode = [SCNNode node];
     [cameraNode setCamera:camera];
     [cameraNode setName:kCameraName];
@@ -314,7 +337,8 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
         SCNMatrix4 camProjectionmatrix = [camera projectionTransform];
         GLKMatrix4 projectionMatrix = SCNMatrix4ToGLKMatrix4(camProjectionmatrix);
         self.skybox.transform.projectionMatrix = projectionMatrix;
-        
+        self.metalSkybox.projectionMatrix = projectionMatrix;
+
         GLKMatrix4 baseModelViewMatrix = GLKMatrix4Identity;
         GLKMatrix4 modelViewMatrix = GLKMatrix4Make(deviceRotationMatrix.m11, deviceRotationMatrix.m21, deviceRotationMatrix.m31, 0.0f,
                                                     deviceRotationMatrix.m12, deviceRotationMatrix.m22, deviceRotationMatrix.m32, 0.0f,
@@ -323,6 +347,7 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
         modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, M_PI_2, 1.0, 0.0, 0.0);
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
         self.skybox.transform.modelviewMatrix = modelViewMatrix;
+        self.metalSkybox.modelviewMatrix = modelViewMatrix;
     }
 }
 
@@ -338,6 +363,20 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
 #endif
 }
 
+-(void)drawMetalSkybox
+{
+#if DEBUG
+    id< MTLRenderCommandEncoder > currentRenderCommandEncoder = [self.scnView currentRenderCommandEncoder];
+    [currentRenderCommandEncoder pushDebugGroup:@"MetalDrawing"];
+#endif
+    
+    [self.metalSkybox render];
+    
+#if DEBUG
+    [currentRenderCommandEncoder popDebugGroup];
+#endif
+}
+
 -(void)renderer:(nonnull id<SCNSceneRenderer>)renderer willRenderScene:(nonnull SCNScene *)scene atTime:(NSTimeInterval)time
 {
     SCNRenderingAPI api = renderer.renderingAPI;
@@ -347,7 +386,7 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
     }
     else
     {
-        NSLog(@"%@ %p %@ cannot render openGL in Metal. The API for the render should be OpenGLES2.", NSStringFromClass(self.class), self, NSStringFromSelector(_cmd));
+        [self drawMetalSkybox];
     }
 }
 

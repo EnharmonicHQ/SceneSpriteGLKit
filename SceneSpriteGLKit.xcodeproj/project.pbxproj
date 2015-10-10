@@ -21,9 +21,13 @@
 		AB3ED14D1BC8C9F5001D8CF3 /* top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1461BC8C9F5001D8CF3 /* top.jpg */; settings = {ASSET_TAGS = (); }; };
 		AB3ED14E1BC8C9F5001D8CF3 /* monkey.dae in Resources */ = {isa = PBXBuildFile; fileRef = AB3ED1471BC8C9F5001D8CF3 /* monkey.dae */; settings = {ASSET_TAGS = (); }; };
 		AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */; settings = {ASSET_TAGS = (); }; };
-		ABDA545F1BC9D63C001D0DC0 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA545E1BC9D63C001D0DC0 /* skybox.png */; settings = {ASSET_TAGS = (); }; };
 		AB5D18151BC8D7CA0086B192 /* SpriteKitDemoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AB5D18141BC8D7CA0086B192 /* SpriteKitDemoScene.sks */; settings = {ASSET_TAGS = (); }; };
 		AB5D18181BC8D9D10086B192 /* ENHVideoCamToSKTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */; settings = {ASSET_TAGS = (); }; };
+		ABDA544F1BC95F9E001D0DC0 /* ENHMetalSkybox.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABDA544E1BC95F9E001D0DC0 /* ENHMetalSkybox.mm */; settings = {ASSET_TAGS = (); }; };
+		ABDA54541BC96052001D0DC0 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABDA54511BC96052001D0DC0 /* AAPLTransforms.mm */; settings = {ASSET_TAGS = (); }; };
+		ABDA54551BC96052001D0DC0 /* AAPLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA54531BC96052001D0DC0 /* AAPLTexture.m */; settings = {ASSET_TAGS = (); }; };
+		ABDA545A1BC96CC9001D0DC0 /* skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = ABDA54591BC96CC9001D0DC0 /* skybox.metal */; settings = {ASSET_TAGS = (); }; };
+		ABDA54611BC9D8AC001D0DC0 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA54601BC9D8AC001D0DC0 /* skybox.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,10 +51,18 @@
 		AB3ED14F1BC8CCE8001D8CF3 /* normalizeRotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = normalizeRotation.h; sourceTree = "<group>"; };
 		AB3ED1501BC8CD16001D8CF3 /* SKScene+Unarchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKScene+Unarchive.h"; sourceTree = "<group>"; };
 		AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+Unarchive.m"; sourceTree = "<group>"; };
-		ABDA545E1BC9D63C001D0DC0 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
 		AB5D18141BC8D7CA0086B192 /* SpriteKitDemoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SpriteKitDemoScene.sks; sourceTree = "<group>"; };
 		AB5D18161BC8D9D10086B192 /* ENHVideoCamToSKTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENHVideoCamToSKTexture.h; sourceTree = "<group>"; };
 		AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENHVideoCamToSKTexture.m; sourceTree = "<group>"; };
+		ABDA544D1BC95F9E001D0DC0 /* ENHMetalSkybox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENHMetalSkybox.h; sourceTree = "<group>"; };
+		ABDA544E1BC95F9E001D0DC0 /* ENHMetalSkybox.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ENHMetalSkybox.mm; sourceTree = "<group>"; };
+		ABDA54501BC96052001D0DC0 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLTransforms.h; sourceTree = "<group>"; };
+		ABDA54511BC96052001D0DC0 /* AAPLTransforms.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLTransforms.mm; sourceTree = "<group>"; };
+		ABDA54521BC96052001D0DC0 /* AAPLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLTexture.h; sourceTree = "<group>"; };
+		ABDA54531BC96052001D0DC0 /* AAPLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLTexture.m; sourceTree = "<group>"; };
+		ABDA54561BC96562001D0DC0 /* AAPLSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AAPLSharedTypes.h; sourceTree = "<group>"; };
+		ABDA54591BC96CC9001D0DC0 /* skybox.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = skybox.metal; sourceTree = "<group>"; };
+		ABDA54601BC9D8AC001D0DC0 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +97,7 @@
 			children = (
 				AB3ED1291BC8C8DD001D8CF3 /* AppDelegate.h */,
 				AB3ED12A1BC8C8DD001D8CF3 /* AppDelegate.m */,
+				ABDA545B1BC977A8001D0DC0 /* Metal Skybox */,
 				AB3ED14F1BC8CCE8001D8CF3 /* normalizeRotation.h */,
 				AB5D18161BC8D9D10086B192 /* ENHVideoCamToSKTexture.h */,
 				AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */,
@@ -100,7 +113,7 @@
 				AB3ED1441BC8C9F5001D8CF3 /* left.jpg */,
 				AB3ED1451BC8C9F5001D8CF3 /* right.jpg */,
 				AB3ED1461BC8C9F5001D8CF3 /* top.jpg */,
-				ABDA545E1BC9D63C001D0DC0 /* skybox.png */,
+				ABDA54601BC9D8AC001D0DC0 /* skybox.png */,
 				AB3ED1471BC8C9F5001D8CF3 /* monkey.dae */,
 				AB3ED13F1BC8C9D3001D8CF3 /* Main.storyboard */,
 				AB3ED1361BC8C8DD001D8CF3 /* LaunchScreen.storyboard */,
@@ -116,6 +129,21 @@
 				AB3ED1271BC8C8DD001D8CF3 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ABDA545B1BC977A8001D0DC0 /* Metal Skybox */ = {
+			isa = PBXGroup;
+			children = (
+				ABDA54561BC96562001D0DC0 /* AAPLSharedTypes.h */,
+				ABDA54501BC96052001D0DC0 /* AAPLTransforms.h */,
+				ABDA54511BC96052001D0DC0 /* AAPLTransforms.mm */,
+				ABDA54521BC96052001D0DC0 /* AAPLTexture.h */,
+				ABDA54531BC96052001D0DC0 /* AAPLTexture.m */,
+				ABDA54591BC96CC9001D0DC0 /* skybox.metal */,
+				ABDA544D1BC95F9E001D0DC0 /* ENHMetalSkybox.h */,
+				ABDA544E1BC95F9E001D0DC0 /* ENHMetalSkybox.mm */,
+			);
+			name = "Metal Skybox";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,10 +205,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB3ED1491BC8C9F5001D8CF3 /* bottom.jpg in Resources */,
-				ABDA545F1BC9D63C001D0DC0 /* skybox.png in Resources */,
 				AB3ED14B1BC8C9F5001D8CF3 /* left.jpg in Resources */,
 				AB3ED14D1BC8C9F5001D8CF3 /* top.jpg in Resources */,
 				AB3ED14E1BC8C9F5001D8CF3 /* monkey.dae in Resources */,
+				ABDA54611BC9D8AC001D0DC0 /* skybox.png in Resources */,
 				AB3ED14C1BC8C9F5001D8CF3 /* right.jpg in Resources */,
 				AB3ED14A1BC8C9F5001D8CF3 /* front.jpg in Resources */,
 				AB3ED1481BC8C9F5001D8CF3 /* back.jpg in Resources */,
@@ -200,9 +228,13 @@
 			files = (
 				AB5D18181BC8D9D10086B192 /* ENHVideoCamToSKTexture.m in Sources */,
 				AB3ED12B1BC8C8DD001D8CF3 /* AppDelegate.m in Sources */,
+				ABDA54541BC96052001D0DC0 /* AAPLTransforms.mm in Sources */,
 				AB3ED1301BC8C8DD001D8CF3 /* GameViewController.m in Sources */,
+				ABDA544F1BC95F9E001D0DC0 /* ENHMetalSkybox.mm in Sources */,
+				ABDA545A1BC96CC9001D0DC0 /* skybox.metal in Sources */,
 				AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */,
 				AB3ED1281BC8C8DD001D8CF3 /* main.m in Sources */,
+				ABDA54551BC96052001D0DC0 /* AAPLTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
