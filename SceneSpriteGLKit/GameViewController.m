@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "SKScene+Unarchive.h"
 #import "normalizeRotation.h"
+#import "ENHVideoCamToSKTexture.h"
 
 @import SceneKit;
 @import GLKit;
@@ -23,6 +24,7 @@ static NSString *kCameraName = @"kCameraName";
 static NSString *kSkyboxCubeName = @"kSkyboxCubeName";
 static NSString *kskSceneCubeHostName = @"kskSceneCubeHostName";
 static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
+static NSString *textureObservationContext = @"Texture Observation Key";
 
 static const GLfloat skyboxSize = 64.0f;
 
@@ -33,11 +35,13 @@ static const GLfloat skyboxSize = 64.0f;
 
 @property(nonatomic, readonly)SCNNode *monkey;
 @property(nonatomic, readonly)SCNNode *camera;
+@property(nonatomic, readonly)SCNNode *skSceneCubeHost;
 
 @property(nonatomic, strong)CMMotionManager *motionManager;
 @property(nonatomic, strong)GLKSkyboxEffect *skybox;
 
 @property(nonatomic, weak)SKScene *loadedFromDiskSKScene;
+@property(nonatomic, strong)ENHVideoCamToSKTexture *videoTextureBridge;
 
 @end
 
@@ -92,6 +96,7 @@ static const GLfloat skyboxSize = 64.0f;
     [loadedFromDiskSKScene setDelegate:self];
     [self setLoadedFromDiskSKScene:loadedFromDiskSKScene];
     
+   
     SCNBox *geometry = [SCNBox boxWithWidth:1.0 height:1.0 length:1.0 chamferRadius:0.0];
     [geometry setMaterials:@[loadedFromDiskSKSceneMaterial]];
     SCNNode *cubeHost = [SCNNode nodeWithGeometry:geometry];
@@ -105,6 +110,18 @@ static const GLfloat skyboxSize = 64.0f;
     SCNAction *rotate = [SCNAction rotateByAngle:M_PI aroundAxis:(SCNVector3){.x = 0.0, .y = 1.0, .z = 1.0} duration:5.0];
     SCNAction *repeat = [SCNAction repeatActionForever:rotate];
     [cubeHost runAction:repeat];
+    
+    ENHVideoCamToSKTexture *videoTextureBridge = [[ENHVideoCamToSKTexture alloc] initWithCaptureSessionPreset:AVCaptureSessionPresetMedium useFrontCamera:YES];
+    
+    [videoTextureBridge addObserver:self
+                         forKeyPath:@"texture"
+                            options:NSKeyValueObservingOptionNew
+                            context:&textureObservationContext];
+    
+    [videoTextureBridge startCapture];
+
+    [self setVideoTextureBridge:videoTextureBridge];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -355,6 +372,40 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
     [gestureRecognizer setScale:1.0];
 }
 
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == &textureObservationContext)
+    {
+        
+        SCNNode *cube = [self skSceneCubeHost];
+        SCNGeometry *cubeGeometry = [cube geometry];
+        
+        //Place the Sprite Kit scene on a cube and attach it to the monkey node
+        SKScene *loadedFromDiskSKScene = [self.class loadSpriteKitScene];
+        SCNMaterial *loadedFromDiskSKSceneMaterial = [SCNMaterial material];
+        loadedFromDiskSKSceneMaterial.diffuse.contents = loadedFromDiskSKScene;
+      
+        if (self.videoTextureBridge.texture != nil)
+        {
+            SCNMaterial *videoMaterial = [SCNMaterial material];
+            videoMaterial.diffuse.contents = self.videoTextureBridge.texture;
+            [cubeGeometry setMaterials:@[loadedFromDiskSKSceneMaterial,
+                                         videoMaterial]];
+
+        }
+        else
+        {
+            [cubeGeometry setMaterials:@[loadedFromDiskSKSceneMaterial]];
+        }
+        
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 #pragma mark - convenience properties
 
 -(SCNScene *)scnScene
@@ -372,6 +423,12 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
 -(SCNNode *)camera
 {
     SCNNode *object  = [self.scnScene.rootNode childNodeWithName:kCameraName recursively:YES];
+    return object;
+}
+
+-(SCNNode *)skSceneCubeHost
+{
+    SCNNode *object = [self.scnScene.rootNode childNodeWithName:kskSceneCubeHostName recursively:YES];
     return object;
 }
 

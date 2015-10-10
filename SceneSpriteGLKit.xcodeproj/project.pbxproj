@@ -23,6 +23,7 @@
 		AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */; settings = {ASSET_TAGS = (); }; };
 		ABDA545F1BC9D63C001D0DC0 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA545E1BC9D63C001D0DC0 /* skybox.png */; settings = {ASSET_TAGS = (); }; };
 		AB5D18151BC8D7CA0086B192 /* SpriteKitDemoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AB5D18141BC8D7CA0086B192 /* SpriteKitDemoScene.sks */; settings = {ASSET_TAGS = (); }; };
+		AB5D18181BC8D9D10086B192 /* ENHVideoCamToSKTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+Unarchive.m"; sourceTree = "<group>"; };
 		ABDA545E1BC9D63C001D0DC0 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
 		AB5D18141BC8D7CA0086B192 /* SpriteKitDemoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SpriteKitDemoScene.sks; sourceTree = "<group>"; };
+		AB5D18161BC8D9D10086B192 /* ENHVideoCamToSKTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENHVideoCamToSKTexture.h; sourceTree = "<group>"; };
+		AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENHVideoCamToSKTexture.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,8 @@
 				AB3ED1291BC8C8DD001D8CF3 /* AppDelegate.h */,
 				AB3ED12A1BC8C8DD001D8CF3 /* AppDelegate.m */,
 				AB3ED14F1BC8CCE8001D8CF3 /* normalizeRotation.h */,
+				AB5D18161BC8D9D10086B192 /* ENHVideoCamToSKTexture.h */,
+				AB5D18171BC8D9D10086B192 /* ENHVideoCamToSKTexture.m */,
 				AB3ED1501BC8CD16001D8CF3 /* SKScene+Unarchive.h */,
 				AB3ED1511BC8CD16001D8CF3 /* SKScene+Unarchive.m */,
 				AB3ED12E1BC8C8DD001D8CF3 /* GameViewController.h */,
@@ -193,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB5D18181BC8D9D10086B192 /* ENHVideoCamToSKTexture.m in Sources */,
 				AB3ED12B1BC8C8DD001D8CF3 /* AppDelegate.m in Sources */,
 				AB3ED1301BC8C8DD001D8CF3 /* GameViewController.m in Sources */,
 				AB3ED1521BC8CD16001D8CF3 /* SKScene+Unarchive.m in Sources */,
