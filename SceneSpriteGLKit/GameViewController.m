@@ -37,6 +37,8 @@ static const GLfloat skyboxSize = 64.0f;
 @property(nonatomic, strong)CMMotionManager *motionManager;
 @property(nonatomic, strong)GLKSkyboxEffect *skybox;
 
+@property(nonatomic, weak)SKScene *loadedFromDiskSKScene;
+
 @end
 
 
@@ -80,6 +82,29 @@ static const GLfloat skyboxSize = 64.0f;
     //Background (GLKit) skybox
     GLKSkyboxEffect *skybox = [self.class loadSkybox];
     [self setSkybox:skybox];
+    
+    //Place the Sprite Kit scene on a cube and attach it to the monkey node
+    SKScene *loadedFromDiskSKScene = [self.class loadSpriteKitScene];
+    SCNMaterial *loadedFromDiskSKSceneMaterial = [SCNMaterial material];
+    loadedFromDiskSKSceneMaterial.diffuse.contents = loadedFromDiskSKScene;
+    
+    [loadedFromDiskSKScene setName:@"Loaded SKScene"];
+    [loadedFromDiskSKScene setDelegate:self];
+    [self setLoadedFromDiskSKScene:loadedFromDiskSKScene];
+    
+    SCNBox *geometry = [SCNBox boxWithWidth:1.0 height:1.0 length:1.0 chamferRadius:0.0];
+    [geometry setMaterials:@[loadedFromDiskSKSceneMaterial]];
+    SCNNode *cubeHost = [SCNNode nodeWithGeometry:geometry];
+    [cubeHost setPosition:(SCNVector3){.x = 0.0, .y = -3.0, .z = 0.0}]; // in front of the monkey
+    [cubeHost setName:kskSceneCubeHostName];
+    
+    SCNNode *monkey = [self monkey];
+    NSParameterAssert(monkey);
+    [monkey addChildNode:cubeHost];
+    
+    SCNAction *rotate = [SCNAction rotateByAngle:M_PI aroundAxis:(SCNVector3){.x = 0.0, .y = 1.0, .z = 1.0} duration:5.0];
+    SCNAction *repeat = [SCNAction repeatActionForever:rotate];
+    [cubeHost runAction:repeat];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -169,6 +194,13 @@ static const GLfloat skyboxSize = 64.0f;
     skybox.zSize = skyboxSize;
     skybox.label = kSkyboxCubeName;
     return skybox;
+}
+
++(SKScene *)loadSpriteKitScene
+{
+    SKScene *scene = [SKScene unarchiveFromFile:@"SpriteKitDemoScene"];
+    NSParameterAssert(scene);
+    return scene;
 }
 
 +(SCNScene *)loadSceneKitScene
