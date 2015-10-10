@@ -24,6 +24,8 @@ static NSString *kSkyboxCubeName = @"kSkyboxCubeName";
 static NSString *kskSceneCubeHostName = @"kskSceneCubeHostName";
 static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
 
+static const GLfloat skyboxSize = 64.0f;
+
 @interface GameViewController () <SCNSceneRendererDelegate, SKSceneDelegate>
 
 @property(nonatomic, weak)SCNView *scnView;
@@ -33,6 +35,7 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
 @property(nonatomic, readonly)SCNNode *camera;
 
 @property(nonatomic, strong)CMMotionManager *motionManager;
+@property(nonatomic, strong)GLKSkyboxEffect *skybox;
 
 @end
 
@@ -73,6 +76,10 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     
     CMMotionManager *motionManager = [[CMMotionManager alloc] init];
     [self setMotionManager:motionManager];
+    
+    //Background (GLKit) skybox
+    GLKSkyboxEffect *skybox = [self.class loadSkybox];
+    [self setSkybox:skybox];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -110,6 +117,38 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     return UIInterfaceOrientationMaskPortrait;
 }
 
+#pragma mark - loading
+
++(NSArray *)cubeMapFiles
+{
+    NSBundle *bundle = [NSBundle mainBundle];
+    [bundle pathForResource:@"right" ofType:@"jpg"];
+    NSArray *mapArray = @[
+                          [bundle pathForResource:@"right" ofType:@"jpg"],
+                          [bundle pathForResource:@"left" ofType:@"jpg"],
+                          [bundle pathForResource:@"top" ofType:@"jpg"],
+                          [bundle pathForResource:@"bottom" ofType:@"jpg"],
+                          [bundle pathForResource:@"back" ofType:@"jpg"],
+                          [bundle pathForResource:@"front" ofType:@"jpg"],
+                          ];
+    return mapArray;
+}
+
++(GLKSkyboxEffect *)loadSkybox
+{
+    NSArray *cubeMapFiles = [self.class cubeMapFiles];
+    GLKTextureInfo *cubemapTexInfo = [GLKTextureLoader cubeMapWithContentsOfFiles:cubeMapFiles options:nil error:nil];
+    GLKSkyboxEffect *skybox = [[GLKSkyboxEffect alloc] init];
+    skybox.center = GLKVector3Make(0.0f, 0.0f, 0.0f);
+    skybox.textureCubeMap.name = cubemapTexInfo.name;
+    skybox.textureCubeMap.enabled = true;
+    skybox.xSize = skyboxSize;
+    skybox.ySize = skyboxSize;
+    skybox.zSize = skyboxSize;
+    skybox.label = kSkyboxCubeName;
+    return skybox;
+}
+
 +(SCNScene *)loadSceneKitScene
 {
     NSURL *sceneURL = [[NSBundle mainBundle] URLForResource:kObjectFileName withExtension:@"dae"];
@@ -131,6 +170,9 @@ static NSString *kskScenePlaneHostName = @"kskScenePlaneHostName";
     monkeyNode.geometry.firstMaterial = monkeyMaterial;
     
     SCNCamera *camera = [SCNCamera camera];
+    double zFar = hypot(skyboxSize*2, skyboxSize*2) + [camera zNear]; // make sure the skybox fits
+    [camera setZFar:zFar];
+
     SCNNode *cameraNode = [SCNNode node];
     [cameraNode setCamera:camera];
     [cameraNode setName:kCameraName];
@@ -191,6 +233,37 @@ static inline void applyRotationMatrixToTransform(CMRotationMatrix deviceRotatio
         [monkey setTransform:transform];
         [monkey setScale:monkeyScale];
         [monkey setPosition:(SCNVector3){0.0, 0.0, 0.0}];
+        
+        SCNNode *cameraNode = [self camera];
+        SCNCamera *camera = [cameraNode camera];
+        SCNMatrix4 camProjectionmatrix = [camera projectionTransform];
+        GLKMatrix4 projectionMatrix = SCNMatrix4ToGLKMatrix4(camProjectionmatrix);
+        self.skybox.transform.projectionMatrix = projectionMatrix;
+    }
+}
+
+-(void)drawSkybox
+{
+#if DEBUG
+    glPushGroupMarkerEXT(0, "GLKitDrawing");
+#endif
+    [self.skybox prepareToDraw];
+    [self.skybox draw];
+#if DEBUG
+    glPopGroupMarkerEXT();
+#endif
+}
+
+-(void)renderer:(nonnull id<SCNSceneRenderer>)renderer willRenderScene:(nonnull SCNScene *)scene atTime:(NSTimeInterval)time
+{
+    SCNRenderingAPI api = renderer.renderingAPI;
+    if (api == SCNRenderingAPIOpenGLES2)
+    {
+        [self drawSkybox];
+    }
+    else
+    {
+        NSLog(@"%@ %p %@ cannot render openGL in Metal. The API for the render should be OpenGLES2.", NSStringFromClass(self.class), self, NSStringFromSelector(_cmd));
     }
 }
 
